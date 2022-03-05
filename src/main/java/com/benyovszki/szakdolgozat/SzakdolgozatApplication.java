@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
 @SpringBootApplication
-@EnableWebSecurity(debug = true)
 public class SzakdolgozatApplication {
 
 	public static void main(String[] args) {

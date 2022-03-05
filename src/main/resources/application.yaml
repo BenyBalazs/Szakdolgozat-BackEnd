@@ -12,6 +12,8 @@ spring:
     url: jdbc:mysql://localhost:6033/app_db
     username: db_user
     password: db_user_pass
+  main:
+    allow-circular-references: true
 
   jpa:
     hibernate.ddl-auto: update

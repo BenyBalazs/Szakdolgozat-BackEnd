@@ -1,13 +1,17 @@
 package com.benyovszki.szakdolgozat.security.jwt;
 
+import com.benyovszki.szakdolgozat.model.user.Role;
 import com.benyovszki.szakdolgozat.rest.RestPaths;
+import com.benyovszki.szakdolgozat.service.impl.CustomUserDetailsService;
 import io.jsonwebtoken.security.Keys;
 import lombok.AllArgsConstructor;
+import org.hibernate.mapping.Collection;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -20,44 +24,52 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.Collections;
+import java.util.List;
 
 @Component
 @AllArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
 
     private final JwtUtils jwtUtils;
+    private CustomUserDetailsService userDetailsService;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String jwt = request.getHeader("Authorization");
-        String requestUser = request.getHeader("username");
+    protected void doFilterInternal(HttpServletRequest httpServletRequest,
+                                    HttpServletResponse httpServletResponse,
+                                    FilterChain filterChain) throws ServletException, IOException {
 
-        if (!StringUtils.hasText(jwt)) {
-            throw new BadCredentialsException("No token received.");
+        String authorizationHeader = httpServletRequest.getHeader("Authorization");
+
+        String token = null;
+        String userName = null;
+
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            token = authorizationHeader.substring(7);
+            userName = jwtUtils.extractUsername(token);
         }
 
-        if (!"SzakdolgozatBackend".equals(jwtUtils.extractIssuer(jwt))) {
-            throw new BadCredentialsException("Invalid Token received!");
-        }
-        String username = jwtUtils.extractUsername(jwt);
+        if (userName != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
-        if (!StringUtils.hasText(requestUser) || !requestUser.equals(username)) {
-            throw new BadCredentialsException("Invalid Token received!");
-        }
+            UserDetails userDetails = userDetailsService.loadUserByUsername(userName);
 
-        if (jwtUtils.isTokenExpired(jwt)) {
-            throw new BadCredentialsException("Invalid Token received!");
-        }
+            if (jwtUtils.validateToken(token, userDetails)) {
 
-        try {
-            String authorities = jwtUtils.extractAuthority(jwt);
-            UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(username, null,
-                    AuthorityUtils.createAuthorityList(authorities));
-            auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-    } catch (Exception e) {
-        throw new BadCredentialsException("Invalid Token received!");
+                //List<Role> authorities = Collections.singletonList(Role.valueOf(jwtUtils.extractAuthority(token)));
+
+                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
+                        new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                usernamePasswordAuthenticationToken
+                        .setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
+                SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+            }
+        }
+        filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
-        filterChain.doFilter(request,response);
-}
+
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        return request.getServletPath().equals(RestPaths.BASIC_USER_PATH + "/**");
+    }
 
 }

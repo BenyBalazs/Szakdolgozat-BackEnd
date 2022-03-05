@@ -1,5 +1,9 @@
 package com.benyovszki.szakdolgozat.service.impl;
 
+import java.util.Optional;
+
+import com.benyovszki.szakdolgozat.exception.NoUserWithThisUsernameException;
+import com.benyovszki.szakdolgozat.exception.UserAlreadyExistsException;
 import com.benyovszki.szakdolgozat.model.user.Role;
 import com.benyovszki.szakdolgozat.model.user.User;
 import com.benyovszki.szakdolgozat.repository.UserRepository;
@@ -14,22 +18,31 @@ public class UserService implements IUserService {
     private UserRepository userRepository;
 
     @Override
-    public User saveUser(User userToSave) {
-        return null;
+    public User saveUser(User userToSave) throws UserAlreadyExistsException {
+
+        if (userRepository.findByUsername(userToSave.getUsername()).isPresent()) {
+            throw new UserAlreadyExistsException(userToSave.getUsername());
+        }
+
+        return userRepository.save(userToSave);
     }
 
     @Override
-    public void addUserRole(User user, Role userRole) {
+    public void setUserRole(String username, Role userRole) throws NoUserWithThisUsernameException {
+        Optional<User> userToEdit = userRepository.findByUsername(username);
 
+        if(userToEdit.isEmpty()) {
+            throw new NoUserWithThisUsernameException(username);
+        }
+
+        User user = userToEdit.get();
+        user.setRole(userRole);
+        userRepository.save(user);
     }
 
     @Override
-    public void revokeRole(User user, Role UserRole) {
+    public User getByUsername(String username) throws NoUserWithThisUsernameException {
 
-    }
-
-    @Override
-    public User getByUsername(String username) {
         return null;
     }
 

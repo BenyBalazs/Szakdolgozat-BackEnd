@@ -1,24 +1,23 @@
 package com.benyovszki.szakdolgozat.model.user;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import org.springframework.security.core.GrantedAuthority;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+public enum Role implements GrantedAuthority {
 
-@Entity
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-public class Role {
+    USER("USER"),
+    ADMIN("ADMIN");
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
-    private long id;
-    private String roleName;
+    private final String roleName;
+
+    Role(String name) {
+        this.roleName = name;
+    }
+    public String getRoleName() {
+        return roleName;
+    }
+
+    @Override
+    public String getAuthority() {
+        return getRoleName();
+    }
 }
