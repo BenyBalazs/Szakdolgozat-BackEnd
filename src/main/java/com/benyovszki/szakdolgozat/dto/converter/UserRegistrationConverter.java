@@ -1,6 +1,6 @@
 package com.benyovszki.szakdolgozat.dto.converter;
 
-import com.benyovszki.szakdolgozat.dto.dto.UserRegisterRequest;
+import com.benyovszki.szakdolgozat.dto.request.UserRegisterRequest;
 import com.benyovszki.szakdolgozat.model.user.Role;
 import com.benyovszki.szakdolgozat.model.user.User;
 import lombok.AllArgsConstructor;
@@ -20,7 +20,7 @@ public class UserRegistrationConverter implements DtoToEntityConverter<UserRegis
                 .username(dto.getUsername())
                 .email(dto.getEmail())
                 .password(passwordEncoder.encode(dto.getPassword()))
-                .role(Role.USER)
+                .role(Role.ROLE_USER)
                 .build();
     }
 

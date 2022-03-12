@@ -1,9 +1,10 @@
 package com.benyovszki.szakdolgozat.rest.impl;
 
 import com.benyovszki.szakdolgozat.action.user.AuthenticationAction;
-import com.benyovszki.szakdolgozat.dto.dto.AuthRequest;
+import com.benyovszki.szakdolgozat.dto.request.AuthRequest;
 import com.benyovszki.szakdolgozat.action.user.UserRegisterAction;
-import com.benyovszki.szakdolgozat.dto.dto.UserRegisterRequest;
+import com.benyovszki.szakdolgozat.dto.request.UserRegisterRequest;
+import com.benyovszki.szakdolgozat.dto.response.AuthResponse;
 import com.benyovszki.szakdolgozat.rest.IUserRest;
 import com.benyovszki.szakdolgozat.rest.RestPaths;
 import lombok.AllArgsConstructor;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 @RestController
 @RequestMapping(RestPaths.BASIC_USER_PATH)
+@CrossOrigin("*")
 public class UserRest implements IUserRest {
 
     private UserRegisterAction userRegisterAction;
@@ -24,7 +26,7 @@ public class UserRest implements IUserRest {
     }
 
     @PostMapping(path = "/login")
-    ResponseEntity<String> authenticateUser(@RequestBody AuthRequest authRequest) {
+    ResponseEntity<AuthResponse> authenticateUser(@RequestBody AuthRequest authRequest) {
         return authenticationAction.authenticate(authRequest);
     }
 }

@@ -1,4 +1,4 @@
-package com.benyovszki.szakdolgozat.dto.dto;
+package com.benyovszki.szakdolgozat.dto.request;
 
 import lombok.Builder;
 import lombok.Data;

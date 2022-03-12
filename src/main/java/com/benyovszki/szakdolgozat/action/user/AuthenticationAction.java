@@ -1,7 +1,9 @@
 package com.benyovszki.szakdolgozat.action.user;
 
-import com.benyovszki.szakdolgozat.dto.dto.AuthRequest;
-import com.benyovszki.szakdolgozat.security.jwt.JwtUtils;
+import com.benyovszki.szakdolgozat.dto.request.AuthRequest;
+import com.benyovszki.szakdolgozat.dto.response.AuthResponse;
+import com.benyovszki.szakdolgozat.security.authentication.CustomAuthProvider;
+import com.benyovszki.szakdolgozat.security.filter.jwt.JwtUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,22 +18,24 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class AuthenticationAction {
 
-    private AuthenticationManager authenticationManager;
+    private CustomAuthProvider authenticationManager;
     private UserDetailsService userDetailsService;
     private JwtUtils jwtUtils;
 
-    public ResponseEntity<String> authenticate(AuthRequest authRequest) {
+    public ResponseEntity<AuthResponse> authenticate(AuthRequest authRequest) {
 
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword())
             );
         } catch (AuthenticationException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid login credentials");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(authRequest.getUsername());
-
-        return ResponseEntity.status(HttpStatus.OK).body(jwtUtils.generateToken(userDetails));
+        AuthResponse response = new AuthResponse();
+        response.setToken(jwtUtils.generateToken(userDetails));
+        response.setUserDetails(userDetails);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

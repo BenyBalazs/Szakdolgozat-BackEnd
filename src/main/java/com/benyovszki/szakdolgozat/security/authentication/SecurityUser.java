@@ -1,4 +1,4 @@
-package com.benyovszki.szakdolgozat.security;
+package com.benyovszki.szakdolgozat.security.authentication;
 
 import com.benyovszki.szakdolgozat.model.user.User;
 import lombok.AllArgsConstructor;

@@ -1,4 +1,4 @@
-package com.benyovszki.szakdolgozat.security.jwt;
+package com.benyovszki.szakdolgozat.security.filter.jwt;
 
 import com.benyovszki.szakdolgozat.model.user.Role;
 import io.jsonwebtoken.Claims;
@@ -20,7 +20,7 @@ public class JwtUtils {
 
     public static final String SECRET_KEY = "jxgEQeXHuPq8VdbyYFNkANdudQ53YUn4";
     public static final String ISSUER = "SzakdolgozatBackend";
-    public static final String USERNAME_CLAIM = "username";
+    //public static final String USERNAME_CLAIM = "username";
     public static final String AUTHORITY_CLAIM = "authority";
 
     private final Key key;
@@ -29,12 +29,11 @@ public class JwtUtils {
         key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes(StandardCharsets.UTF_8));
     }
 
-    public String extractUsername(String token) {
-        return String.valueOf(extractAllClaims(token).get(USERNAME_CLAIM));
-    }
-
     public String extractAuthority(String token) {
         return removeFirstAndLastChar(String.valueOf(extractAllClaims(token).get(AUTHORITY_CLAIM)));
+    }
+    public String extractUsername(String token) {
+        return extractClaim(token, Claims::getSubject);
     }
 
     public String extractIssuer(String token) {
@@ -62,7 +61,6 @@ public class JwtUtils {
 
         return Jwts.builder()
                 .setIssuer(ISSUER)
-                .claim(USERNAME_CLAIM, userDetails.getUsername())
                 .claim(AUTHORITY_CLAIM, userDetails.getAuthorities())
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
@@ -81,7 +79,7 @@ public class JwtUtils {
     }
 
     private Boolean didIIssuedThis(String token) {
-        return  ISSUER.equals(extractIssuer(token));
+        return ISSUER.equals(extractIssuer(token));
     }
 
     private Boolean doesAuthoritiesMatch(String token, UserDetails userDetails) {
@@ -90,7 +88,7 @@ public class JwtUtils {
 
     }
 
-    public String removeFirstAndLastChar (String str) {
+    private String removeFirstAndLastChar (String str) {
 
         // Removing first and last character
         // of a string using substring() method

@@ -2,6 +2,7 @@ package com.benyovszki.szakdolgozat.service.impl;
 
 import java.util.Optional;
 
+import com.benyovszki.szakdolgozat.exception.EmailAlreadyExistsException;
 import com.benyovszki.szakdolgozat.exception.NoUserWithThisUsernameException;
 import com.benyovszki.szakdolgozat.exception.UserAlreadyExistsException;
 import com.benyovszki.szakdolgozat.model.user.Role;
@@ -22,6 +23,10 @@ public class UserService implements IUserService {
 
         if (userRepository.findByUsername(userToSave.getUsername()).isPresent()) {
             throw new UserAlreadyExistsException(userToSave.getUsername());
+        }
+
+        if (userRepository.findByEmail(userToSave.getEmail()).isPresent()) {
+            throw new EmailAlreadyExistsException(userToSave.getEmail());
         }
 
         return userRepository.save(userToSave);

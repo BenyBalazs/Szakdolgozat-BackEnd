@@ -1,6 +1,6 @@
 package com.benyovszki.szakdolgozat.rest;
 
-import com.benyovszki.szakdolgozat.dto.dto.UserRegisterRequest;
+import com.benyovszki.szakdolgozat.dto.request.UserRegisterRequest;
 import org.springframework.http.ResponseEntity;
 
 public interface IUserRest {

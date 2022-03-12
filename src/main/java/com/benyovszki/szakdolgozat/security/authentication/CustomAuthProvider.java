@@ -1,4 +1,4 @@
-package com.benyovszki.szakdolgozat.security;
+package com.benyovszki.szakdolgozat.security.authentication;
 
 import com.benyovszki.szakdolgozat.service.impl.CustomUserDetailsService;
 import lombok.AllArgsConstructor;
@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+@Component
 @AllArgsConstructor
 public class CustomAuthProvider implements AuthenticationProvider {
 
