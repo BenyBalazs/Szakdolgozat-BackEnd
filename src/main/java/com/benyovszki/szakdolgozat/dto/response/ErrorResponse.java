@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class ErrorResponse {
 
+    private String timeStamp;
     private int errorCode;
     private String massage;
     private String exception;

@@ -2,6 +2,7 @@ package com.benyovszki.szakdolgozat.security;
 
 import com.benyovszki.szakdolgozat.util.JwtFilterResponseUtil;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
@@ -19,6 +20,6 @@ public class CustomAuthEntryPoint implements AuthenticationEntryPoint {
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        jwtFilterResponseUtil.setErrorWithException(response, 403, "NO_PERMISSION", authException);
+        jwtFilterResponseUtil.setErrorWithException(response, HttpStatus.FORBIDDEN, "NO_PERMISSION", authException);
     }
 }

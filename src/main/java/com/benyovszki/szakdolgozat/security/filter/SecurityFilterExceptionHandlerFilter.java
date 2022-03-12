@@ -4,6 +4,7 @@ package com.benyovszki.szakdolgozat.security.filter;
 import com.benyovszki.szakdolgozat.util.JwtFilterResponseUtil;
 import io.jsonwebtoken.JwtException;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -25,7 +26,7 @@ public class SecurityFilterExceptionHandlerFilter extends OncePerRequestFilter {
         try {
             filterChain.doFilter(request, response);
         } catch (JwtException j) {
-            jwtFilterResponseUtil.setErrorWithException(response, 400, "BAD_REQUEST", j);
+            jwtFilterResponseUtil.setErrorWithException(response, HttpStatus.BAD_REQUEST, "BAD_REQUEST", j);
         }
     }
 }

@@ -2,6 +2,7 @@ package com.benyovszki.szakdolgozat.security;
 
 import com.benyovszki.szakdolgozat.util.JwtFilterResponseUtil;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
@@ -19,6 +20,6 @@ public class CustomAccessDeniedHAndler implements AccessDeniedHandler {
 
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
-        jwtFilterResponseUtil.setErrorWithException(response, 403, "ACCESS_DENIED_HANDLER", accessDeniedException);
+        jwtFilterResponseUtil.setErrorWithException(response, HttpStatus.FORBIDDEN, "ACCESS_DENIED_HANDLER", accessDeniedException);
     }
 }
