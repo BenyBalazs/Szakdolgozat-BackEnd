@@ -11,22 +11,21 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@AllArgsConstructor
 @RestController
-@RequestMapping(RestPaths.BASIC_USER_PATH)
-@CrossOrigin("*")
+@AllArgsConstructor
 public class UserRest implements IUserRest {
 
     private UserRegisterAction userRegisterAction;
     private AuthenticationAction authenticationAction;
 
-    @PostMapping(path = "/register")
-    public ResponseEntity<String> registerUser(@RequestBody UserRegisterRequest user) {
-        return userRegisterAction.registerUser(user);
+
+    @Override
+    public ResponseEntity<AuthResponse> authenticateUser(AuthRequest authRequest) {
+        return authenticationAction.authenticate(authRequest);
     }
 
-    @PostMapping(path = "/login")
-    ResponseEntity<AuthResponse> authenticateUser(@RequestBody AuthRequest authRequest) {
-        return authenticationAction.authenticate(authRequest);
+    @Override
+    public ResponseEntity<String> registerUser(UserRegisterRequest user) {
+        return userRegisterAction.registerUser(user);
     }
 }

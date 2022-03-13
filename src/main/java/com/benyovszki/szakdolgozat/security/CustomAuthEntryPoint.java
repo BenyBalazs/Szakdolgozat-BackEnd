@@ -20,6 +20,6 @@ public class CustomAuthEntryPoint implements AuthenticationEntryPoint {
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        jwtFilterResponseUtil.setErrorWithException(response, HttpStatus.FORBIDDEN, "NO_PERMISSION", authException);
+        jwtFilterResponseUtil.setErrorWithException(response, HttpStatus.FORBIDDEN, authException);
     }
 }

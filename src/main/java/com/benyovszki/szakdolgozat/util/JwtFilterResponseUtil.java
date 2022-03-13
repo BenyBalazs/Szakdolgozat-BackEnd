@@ -21,13 +21,14 @@ import java.util.Date;
 public class JwtFilterResponseUtil {
 
     @SneakyThrows
-    public void setErrorWithException(HttpServletResponse response, HttpStatus status, String msg, Exception ex) throws IOException {
+    public void setErrorWithException(HttpServletResponse response, HttpStatus status, Exception ex) throws IOException {
 
         ErrorResponse errorResponse = new ErrorResponse();
         errorResponse.setTimeStamp(DateTime.now().toString());
         errorResponse.setErrorCode(status.value());
         errorResponse.setMassage(status.getReasonPhrase());
-        errorResponse.setException(ex.getMessage());
+        errorResponse.setException(ex.getClass().getName());
+        errorResponse.setExceptionMassage(ex.getMessage());
 
         byte[] responseToSend = restResponseBytes(errorResponse);
         ((HttpServletResponse) response).setHeader("Content-Type", "application/json");

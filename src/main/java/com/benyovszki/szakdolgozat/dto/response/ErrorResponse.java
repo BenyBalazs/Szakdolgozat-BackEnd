@@ -11,5 +11,6 @@ public class ErrorResponse {
     private int errorCode;
     private String massage;
     private String exception;
+    private String exceptionMassage;
 
 }

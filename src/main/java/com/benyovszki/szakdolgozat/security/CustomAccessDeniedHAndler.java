@@ -20,6 +20,6 @@ public class CustomAccessDeniedHAndler implements AccessDeniedHandler {
 
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
-        jwtFilterResponseUtil.setErrorWithException(response, HttpStatus.FORBIDDEN, "ACCESS_DENIED_HANDLER", accessDeniedException);
+        jwtFilterResponseUtil.setErrorWithException(response, HttpStatus.FORBIDDEN, accessDeniedException);
     }
 }

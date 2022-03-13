@@ -2,9 +2,8 @@ package com.benyovszki.szakdolgozat.service.impl;
 
 import java.util.Optional;
 
-import com.benyovszki.szakdolgozat.exception.EmailAlreadyExistsException;
-import com.benyovszki.szakdolgozat.exception.NoUserWithThisUsernameException;
-import com.benyovszki.szakdolgozat.exception.UserAlreadyExistsException;
+import com.benyovszki.szakdolgozat.exception.ErrorType;
+import com.benyovszki.szakdolgozat.exception.OperationException;
 import com.benyovszki.szakdolgozat.model.user.Role;
 import com.benyovszki.szakdolgozat.model.user.User;
 import com.benyovszki.szakdolgozat.repository.UserRepository;
@@ -19,25 +18,25 @@ public class UserService implements IUserService {
     private UserRepository userRepository;
 
     @Override
-    public User saveUser(User userToSave) throws UserAlreadyExistsException {
+    public User saveUser(User userToSave) throws OperationException {
 
         if (userRepository.findByUsername(userToSave.getUsername()).isPresent()) {
-            throw new UserAlreadyExistsException(userToSave.getUsername());
+            throw new OperationException(ErrorType.USERNAME_TAKEN, String.format("No user with this username: %s", userToSave.getUsername()));
         }
 
         if (userRepository.findByEmail(userToSave.getEmail()).isPresent()) {
-            throw new EmailAlreadyExistsException(userToSave.getEmail());
+            throw new OperationException(ErrorType.EMAIL_ALREADY_IN_USE, String.format("No user with this username: %s", userToSave.getUsername()));
         }
 
         return userRepository.save(userToSave);
     }
 
     @Override
-    public void setUserRole(String username, Role userRole) throws NoUserWithThisUsernameException {
+    public void setUserRole(String username, Role userRole) throws OperationException {
         Optional<User> userToEdit = userRepository.findByUsername(username);
 
         if(userToEdit.isEmpty()) {
-            throw new NoUserWithThisUsernameException(username);
+            throw new OperationException(ErrorType.USERNAME_TAKEN, String.format("No user with this username: %s", username));
         }
 
         User user = userToEdit.get();
@@ -46,9 +45,10 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User getByUsername(String username) throws NoUserWithThisUsernameException {
+    public User getByUsername(String username) throws OperationException {
 
-        return null;
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new OperationException(ErrorType.USERNAME_TAKEN, String.format("Email is taken:  %s", username)));
     }
 
     @Override

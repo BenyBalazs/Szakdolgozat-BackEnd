@@ -26,7 +26,7 @@ public class SecurityFilterExceptionHandlerFilter extends OncePerRequestFilter {
         try {
             filterChain.doFilter(request, response);
         } catch (JwtException j) {
-            jwtFilterResponseUtil.setErrorWithException(response, HttpStatus.BAD_REQUEST, "BAD_REQUEST", j);
+            jwtFilterResponseUtil.setErrorWithException(response, HttpStatus.UNAUTHORIZED, j);
         }
     }
 }

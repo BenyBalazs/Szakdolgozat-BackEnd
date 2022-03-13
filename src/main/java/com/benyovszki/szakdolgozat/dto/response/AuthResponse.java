@@ -9,5 +9,5 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class AuthResponse {
 
     String token;
-    UserDetails userDetails;
+    UserResponse userDetails;
 }

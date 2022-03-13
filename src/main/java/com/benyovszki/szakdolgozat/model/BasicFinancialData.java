@@ -1,4 +1,4 @@
-package com.benyovszki.szakdolgozat.model.user;
+package com.benyovszki.szakdolgozat.model;
 
 import lombok.*;
 
@@ -10,7 +10,7 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @MappedSuperclass
-public class BasicFinialData {
+public class BasicFinancialData {
 
     private String name;
     private BigDecimal amount;
