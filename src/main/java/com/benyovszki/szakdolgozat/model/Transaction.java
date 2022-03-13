@@ -4,6 +4,8 @@ import com.benyovszki.szakdolgozat.model.user.User;
 import lombok.*;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
+import java.util.Date;
 
 @Entity
 @NoArgsConstructor
@@ -11,14 +13,20 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Builder
-public class Expense extends BasicFinancialData {
+public class Transaction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    private User owner;
+    private String name;
+    private BigDecimal amount;
+    private Date dateOfPayment;
+    private Date dateOfAdd;
+    @Enumerated(value = EnumType.STRING)
+    private TransactionType type;
     @ManyToOne(fetch = FetchType.LAZY)
-    private Type type;
+    private Category category;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @NonNull
+    private User owner;
 }

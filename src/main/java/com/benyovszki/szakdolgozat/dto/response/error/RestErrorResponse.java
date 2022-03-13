@@ -1,4 +1,4 @@
-package com.benyovszki.szakdolgozat.dto.response;
+package com.benyovszki.szakdolgozat.dto.response.error;
 
 import com.benyovszki.szakdolgozat.exception.ErrorType;
 import lombok.AllArgsConstructor;

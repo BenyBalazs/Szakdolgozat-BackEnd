@@ -2,6 +2,7 @@ package com.benyovszki.szakdolgozat.exception;
 
 public enum ErrorType {
     ACCESS_DENIED,
+    EMAIL_DOES_NOT_EXISTS,
     USERNAME_TAKEN,
     INVALID_CREDENTIALS,
     EMAIL_ALREADY_IN_USE,

@@ -13,7 +13,7 @@ spring:
     username: db_user
     password: db_user_pass
   main:
-    allow-circular-references: true
+    allow-circular-references: false
 
   jpa:
     hibernate.ddl-auto: update

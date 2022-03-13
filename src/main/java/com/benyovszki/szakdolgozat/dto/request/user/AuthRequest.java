@@ -1,4 +1,4 @@
-package com.benyovszki.szakdolgozat.dto.request;
+package com.benyovszki.szakdolgozat.dto.request.user;
 
 import lombok.Data;
 

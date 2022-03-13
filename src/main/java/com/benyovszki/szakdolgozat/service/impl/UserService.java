@@ -36,7 +36,7 @@ public class UserService implements IUserService {
         Optional<User> userToEdit = userRepository.findByUsername(username);
 
         if(userToEdit.isEmpty()) {
-            throw new OperationException(ErrorType.USERNAME_TAKEN, String.format("No user with this username: %s", username));
+            throw new OperationException(ErrorType.USERNAME_TAKEN, String.format("Username is taken: %s", username));
         }
 
         User user = userToEdit.get();
@@ -48,11 +48,12 @@ public class UserService implements IUserService {
     public User getByUsername(String username) throws OperationException {
 
         return userRepository.findByUsername(username)
-                .orElseThrow(() -> new OperationException(ErrorType.USERNAME_TAKEN, String.format("Email is taken:  %s", username)));
+                .orElseThrow(() -> new OperationException(ErrorType.NO_USER_WITH_THIS_USERNAME, String.format("No user with this username:  %s", username)));
     }
 
     @Override
     public User getByEmail(String email) {
-        return null;
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new OperationException(ErrorType.EMAIL_DOES_NOT_EXISTS, String.format("Email does not exists:  %s", email)));
     }
 }

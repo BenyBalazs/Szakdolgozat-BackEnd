@@ -1,8 +1,8 @@
 package com.benyovszki.szakdolgozat.action.user;
 
-import com.benyovszki.szakdolgozat.dto.request.AuthRequest;
-import com.benyovszki.szakdolgozat.dto.response.AuthResponse;
-import com.benyovszki.szakdolgozat.dto.response.UserResponse;
+import com.benyovszki.szakdolgozat.dto.request.user.AuthRequest;
+import com.benyovszki.szakdolgozat.dto.response.user.AuthResponse;
+import com.benyovszki.szakdolgozat.dto.response.user.UserResponse;
 import com.benyovszki.szakdolgozat.exception.ErrorType;
 import com.benyovszki.szakdolgozat.exception.InvalidCredentialsException;
 import com.benyovszki.szakdolgozat.exception.OperationException;
@@ -14,7 +14,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;

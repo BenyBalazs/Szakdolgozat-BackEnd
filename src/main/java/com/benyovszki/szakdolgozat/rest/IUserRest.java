@@ -1,9 +1,9 @@
 package com.benyovszki.szakdolgozat.rest;
 
-import com.benyovszki.szakdolgozat.dto.request.AuthRequest;
-import com.benyovszki.szakdolgozat.dto.request.UserRegisterRequest;
-import com.benyovszki.szakdolgozat.dto.response.AuthResponse;
-import lombok.AllArgsConstructor;
+import com.benyovszki.szakdolgozat.dto.request.user.AuthRequest;
+import com.benyovszki.szakdolgozat.dto.request.user.UserRegisterRequest;
+import com.benyovszki.szakdolgozat.dto.response.user.AuthResponse;
+import com.benyovszki.szakdolgozat.dto.response.user.UserResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,5 +15,5 @@ public interface IUserRest {
     ResponseEntity<AuthResponse> authenticateUser(@RequestBody AuthRequest authRequest);
 
     @PostMapping(path = "/register")
-    ResponseEntity<String> registerUser(@RequestBody UserRegisterRequest user);
+    ResponseEntity<UserResponse> registerUser(@RequestBody UserRegisterRequest user);
 }

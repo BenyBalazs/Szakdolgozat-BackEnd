@@ -1,20 +1,15 @@
 package com.benyovszki.szakdolgozat.util;
 
-import com.benyovszki.szakdolgozat.dto.response.ErrorResponse;
+import com.benyovszki.szakdolgozat.dto.response.error.ErrorResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import org.apache.commons.lang3.time.DateUtils;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Date;
 
 @Component
 @AllArgsConstructor

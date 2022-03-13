@@ -1,12 +1,12 @@
 package com.benyovszki.szakdolgozat.rest.impl;
 
 import com.benyovszki.szakdolgozat.action.user.AuthenticationAction;
-import com.benyovszki.szakdolgozat.dto.request.AuthRequest;
+import com.benyovszki.szakdolgozat.dto.request.user.AuthRequest;
 import com.benyovszki.szakdolgozat.action.user.UserRegisterAction;
-import com.benyovszki.szakdolgozat.dto.request.UserRegisterRequest;
-import com.benyovszki.szakdolgozat.dto.response.AuthResponse;
+import com.benyovszki.szakdolgozat.dto.request.user.UserRegisterRequest;
+import com.benyovszki.szakdolgozat.dto.response.user.AuthResponse;
+import com.benyovszki.szakdolgozat.dto.response.user.UserResponse;
 import com.benyovszki.szakdolgozat.rest.IUserRest;
-import com.benyovszki.szakdolgozat.rest.RestPaths;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +25,7 @@ public class UserRest implements IUserRest {
     }
 
     @Override
-    public ResponseEntity<String> registerUser(UserRegisterRequest user) {
+    public ResponseEntity<UserResponse> registerUser(UserRegisterRequest user) {
         return userRegisterAction.registerUser(user);
     }
 }

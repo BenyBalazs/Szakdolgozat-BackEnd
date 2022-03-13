@@ -1,8 +1,7 @@
-package com.benyovszki.szakdolgozat.dto.response;
+package com.benyovszki.szakdolgozat.dto.response.user;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetails;
 
 @Data
 @NoArgsConstructor

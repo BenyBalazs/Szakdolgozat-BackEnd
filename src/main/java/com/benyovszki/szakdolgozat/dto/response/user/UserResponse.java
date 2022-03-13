@@ -1,4 +1,4 @@
-package com.benyovszki.szakdolgozat.dto.response;
+package com.benyovszki.szakdolgozat.dto.response.user;
 
 import com.benyovszki.szakdolgozat.model.user.Role;
 import lombok.AllArgsConstructor;

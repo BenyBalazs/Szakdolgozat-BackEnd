@@ -1,6 +1,6 @@
 package com.benyovszki.szakdolgozat.dto.converter;
 
-import com.benyovszki.szakdolgozat.dto.request.UserRegisterRequest;
+import com.benyovszki.szakdolgozat.dto.request.user.UserRegisterRequest;
 import com.benyovszki.szakdolgozat.model.user.Role;
 import com.benyovszki.szakdolgozat.model.user.User;
 import lombok.AllArgsConstructor;

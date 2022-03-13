@@ -1,7 +1,7 @@
 package com.benyovszki.szakdolgozat.rest;
 
-import com.benyovszki.szakdolgozat.dto.response.ErrorResponse;
-import com.benyovszki.szakdolgozat.dto.response.RestErrorResponse;
+import com.benyovszki.szakdolgozat.dto.response.error.ErrorResponse;
+import com.benyovszki.szakdolgozat.dto.response.error.RestErrorResponse;
 import com.benyovszki.szakdolgozat.exception.ErrorType;
 import com.benyovszki.szakdolgozat.exception.InvalidCredentialsException;
 import com.benyovszki.szakdolgozat.exception.OperationException;
@@ -22,48 +22,25 @@ public class RestExceptionHandler {
     @ExceptionHandler(InvalidCredentialsException.class)
     public ResponseEntity<ErrorResponse> handleRuntimeException(InvalidCredentialsException operationException, HandlerMethod handlerMethod, HttpServletRequest request) {
         HttpStatus status = HttpStatus.UNAUTHORIZED;
-
-        RestErrorResponse errorResponse = new RestErrorResponse();
-        errorResponse.setTimeStamp(DateTime.now().toString());
-        errorResponse.setErrorCode(status.value());
-        errorResponse.setErrorType(operationException.getErrorType());
-        errorResponse.setException(operationException.getClass().getName());
-        errorResponse.setMassage(status.getReasonPhrase());
-        errorResponse.setServicePath(request.getRequestURI());
-        errorResponse.setServiceName(handlerMethod.getMethod().getName());
-        errorResponse.setExceptionMassage(operationException.getMessage());
-        return ResponseEntity.status(status).body(errorResponse);
+        return ResponseEntity.status(status).body(buildResponse(operationException, status, handlerMethod, request));
     }
 
     @ExceptionHandler(OperationException.class)
     public ResponseEntity<ErrorResponse> handleRuntimeException(OperationException operationException, HandlerMethod handlerMethod, HttpServletRequest request) {
         HttpStatus status = HttpStatus.BAD_REQUEST;
-
-        RestErrorResponse errorResponse = new RestErrorResponse();
-        errorResponse.setTimeStamp(DateTime.now().toString());
-        errorResponse.setErrorCode(status.value());
-        errorResponse.setErrorType(operationException.getErrorType());
-        errorResponse.setException(operationException.getClass().getName());
-        errorResponse.setMassage(status.getReasonPhrase());
-        errorResponse.setServicePath(request.getRequestURI());
-        errorResponse.setServiceName(handlerMethod.getMethod().getName());
-        errorResponse.setExceptionMassage(operationException.getMessage());
-        return ResponseEntity.status(status).body(errorResponse);
+        return ResponseEntity.status(status).body(buildResponse(operationException, status, handlerMethod, request));
     }
 
-    @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<ErrorResponse> handleRuntimeException(AccessDeniedException accessDeniedException, HandlerMethod handlerMethod, HttpServletRequest request) {
-        HttpStatus status = HttpStatus.BAD_REQUEST;
-
+    private <T extends OperationException> ErrorResponse buildResponse(T ex, HttpStatus status , HandlerMethod handlerMethod, HttpServletRequest request) {
         RestErrorResponse errorResponse = new RestErrorResponse();
         errorResponse.setTimeStamp(DateTime.now().toString());
         errorResponse.setErrorCode(status.value());
-        errorResponse.setErrorType(ErrorType.ACCESS_DENIED);
-        errorResponse.setException(accessDeniedException.getClass().getName());
+        errorResponse.setErrorType(ex.getErrorType());
+        errorResponse.setException(ex.getClass().getName());
         errorResponse.setMassage(status.getReasonPhrase());
         errorResponse.setServicePath(request.getRequestURI());
         errorResponse.setServiceName(handlerMethod.getMethod().getName());
-        errorResponse.setExceptionMassage(accessDeniedException.getMessage());
-        return ResponseEntity.status(status).body(errorResponse);
+        errorResponse.setExceptionMassage(ex.getMessage());
+        return errorResponse;
     }
 }
