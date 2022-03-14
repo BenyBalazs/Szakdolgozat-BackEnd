@@ -1,8 +1,6 @@
 package com.benyovszki.szakdolgozat.rest;
 
-import com.benyovszki.szakdolgozat.dto.request.expense.ExpenseCreateRequest;
-import com.benyovszki.szakdolgozat.dto.request.expense.ExpenseQueryRequest;
-import com.benyovszki.szakdolgozat.dto.response.expense.ExpenseResponse;
+import com.benyovszki.szakdolgozat.dto.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.http.HttpResponse;
@@ -11,12 +9,14 @@ import java.net.http.HttpResponse;
 @CrossOrigin("*")
 public interface ITransactionRest {
 
+     @GetMapping
+     HttpResponse<TransactionResponse> getById(@RequestParam String id);
      @PostMapping
-     HttpResponse<ExpenseResponse> createTransaction(@RequestBody ExpenseCreateRequest expenseCreateRequest);
+     HttpResponse<TransactionResponse> createTransaction(@RequestBody TransactionCreateRequest expenseCreateRequest);
      @PutMapping
-     HttpResponse<ExpenseResponse> editTransaction(@RequestBody ExpenseCreateRequest expenseCreateRequest);
+     HttpResponse<TransactionResponse> editTransaction(@RequestBody TransactionEditRequest expenseCreateRequest);
      @DeleteMapping
-     HttpResponse<ExpenseResponse> deleteTransaction();
+     HttpResponse<TransactionResponse> deleteTransaction();
      @PostMapping(path = RestPaths.QUERY)
-     HttpResponse<ExpenseResponse> queryTransaction(@RequestBody ExpenseQueryRequest expenseQueryRequest);
+     HttpResponse<TransactionListResponse> queryTransaction(@RequestBody TransactionListRequest expenseQueryRequest);
 }
