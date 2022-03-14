@@ -1,5 +1,7 @@
 package com.benyovszki.szakdolgozat.service.impl;
 
+import com.benyovszki.szakdolgozat.exception.ErrorType;
+import com.benyovszki.szakdolgozat.exception.OperationException;
 import com.benyovszki.szakdolgozat.model.Transaction;
 import com.benyovszki.szakdolgozat.repository.TransactionRepository;
 import com.benyovszki.szakdolgozat.service.ITransactionService;
@@ -14,21 +16,17 @@ public class TransactionService implements ITransactionService {
 
     @Override
     public Transaction getById(long id) {
-        return null;
+
+        return transactionRepository.findById(id).orElseThrow(() -> new OperationException(ErrorType.ENTITY_NOT_FOUND, "No Entity with this id was found"));
     }
 
     @Override
     public Transaction saveTransaction(Transaction transaction) {
-        return null;
+        return transactionRepository.save(transaction);
     }
 
     @Override
-    public Transaction editTransaction(Transaction transaction) {
-        return null;
-    }
-
-    @Override
-    public boolean deleteTransaction(long id) {
-        return false;
+    public void deleteTransaction(long id) {
+        transactionRepository.deleteById(id);
     }
 }

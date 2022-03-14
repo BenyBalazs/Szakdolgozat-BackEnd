@@ -1,4 +1,4 @@
 package com.benyovszki.szakdolgozat.action.transaction;
 
-public class EditTransaction {
+public class TransactionQueryAction {
 }

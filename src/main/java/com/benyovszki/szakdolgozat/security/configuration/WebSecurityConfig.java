@@ -74,7 +74,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable()
                 .authorizeRequests()
                 .antMatchers(RestPaths.BASIC_USER_PATH + "/**").permitAll()
-                .antMatchers("/test/token").hasAnyRole(Role.ROLE_USER.getAuthority(), Role.ROLE_ADMIN.getAuthority())
+                .antMatchers("/test/token").hasAnyAuthority(Role.ROLE_USER.getAuthority(), Role.ROLE_ADMIN.getAuthority())
                 .antMatchers("/test/admin").hasAnyAuthority(Role.ROLE_ADMIN.getAuthority())
                 .anyRequest().authenticated()
                 .and().exceptionHandling().authenticationEntryPoint(customAuthEntryPoint).accessDeniedHandler(accessDeniedHAndler)

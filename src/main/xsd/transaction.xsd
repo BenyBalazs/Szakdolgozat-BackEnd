@@ -24,6 +24,8 @@
             <xsd:extension base="TransactionData">
                 <xsd:sequence>
                     <xsd:element name="id" type="xsd:long"/>
+                    <xsd:element name="owner" type="xsd:string"/>
+                    <xsd:element name="dateOfAdd" type="xsd:dateTime"/>
                 </xsd:sequence>
             </xsd:extension>
         </xsd:complexContent>
@@ -48,18 +50,20 @@
 
     <xsd:complexType name="TransactionResponse">
         <xsd:sequence>
-            <xsd:element name="name" type="xsd:string"/>
+            <xsd:element name="transactionDetails" type="TransactionEntityType"/>
         </xsd:sequence>
     </xsd:complexType>
 
     <xsd:complexType name="TransactionCreateRequest">
         <xsd:sequence>
+            <xsd:element name="owner" type="xsd:string"/>
             <xsd:element name="transactionData" type="TransactionData"/>
         </xsd:sequence>
     </xsd:complexType>
 
     <xsd:complexType name="TransactionEditRequest">
         <xsd:sequence>
+            <xsd:element name="owner" type="xsd:string"/>
             <xsd:element name="transactionEntityData" type="TransactionEntityType"/>
         </xsd:sequence>
     </xsd:complexType>
@@ -84,6 +88,8 @@
 
     <xsd:complexType name="TransactionListResponse">
         <xsd:sequence>
+            <xsd:element name="maxElements" type="xsd:integer"/>
+            <xsd:element name="page" type="xsd:integer"/>
             <xsd:element name="transactionList" type="TransactionListType"/>
         </xsd:sequence>
     </xsd:complexType>

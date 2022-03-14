@@ -5,6 +5,8 @@ public final class RestPaths {
     private RestPaths() {
     }
 
+    public static final String PATH_PARAM = "/{id}";
+
     public static final String BASE_PATH = "/api";
 
     public static final String QUERY = "/query";
@@ -13,5 +15,5 @@ public final class RestPaths {
 
     public static final String BASIC_USER_PATH = BASE_PATH + "/user";
 
-    public static final String BASIC_EXPENSE_PATH = BASE_PATH + "/expense";
+    public static final String BASIC_EXPENSE_PATH = BASE_PATH + "/transaction";
 }

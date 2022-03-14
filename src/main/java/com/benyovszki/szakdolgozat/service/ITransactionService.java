@@ -6,6 +6,5 @@ public interface ITransactionService {
 
     Transaction getById(long id);
     Transaction saveTransaction(Transaction transaction);
-    Transaction editTransaction(Transaction transaction);
-    boolean deleteTransaction(long id);
+    void deleteTransaction(long id);
 }
