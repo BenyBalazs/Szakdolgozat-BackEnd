@@ -36,7 +36,7 @@ public class TransactionEditAction {
             throw new OperationException(ErrorType.YOU_DONT_OWN_THIS_ENTITY, "This entity was created by another user.");
         }
 
-        transaction = mapper.map(entityType, Transaction.class);
+        mapper.map(entityType, transaction);
 
         if (entityType.getCategory() != 0) {
             //TODO:KATEGÓRIA BEÁLLÍTÁSA.

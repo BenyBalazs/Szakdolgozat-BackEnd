@@ -21,7 +21,7 @@ public class CategoryEditAction {
     public CategoryResponse editCategory(CategoryEditRequest editRequest) {
         CategoryEntityType entityType = editRequest.getCategoryEntityData();
         Category category = categoryService.findById(entityType.getId());
-        category = mapper.map(entityType, Category.class);
+        mapper.map(entityType, category);
         categoryService.save(category);
         return new CategoryResponse().withCategoryDetails(mapper.map(category, CategoryEntityType.class));
     }

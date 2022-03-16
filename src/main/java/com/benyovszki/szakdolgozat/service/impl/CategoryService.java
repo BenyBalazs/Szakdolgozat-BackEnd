@@ -4,10 +4,7 @@ import com.benyovszki.szakdolgozat.exception.ErrorType;
 import com.benyovszki.szakdolgozat.exception.OperationException;
 import com.benyovszki.szakdolgozat.model.Category;
 import com.benyovszki.szakdolgozat.repository.CategoryRepository;
-import dto.szakdolgozat.benyovszki.com.category.CategoryEntityType;
-import dto.szakdolgozat.benyovszki.com.category.CategoryListType;
-import dto.szakdolgozat.benyovszki.com.category.CategoryQueryRequest;
-import dto.szakdolgozat.benyovszki.com.category.CategoryQueryResponse;
+import dto.szakdolgozat.benyovszki.com.category.*;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.jpa.repository.query.QueryUtils;
@@ -48,40 +45,48 @@ public class CategoryService {
 
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Category> cq = cb.createQuery(Category.class);
-
         Root<Category> categoryRoot = cq.from(Category.class);
-        List<Predicate> predicates = new ArrayList<>();
-
-        if (StringUtils.hasText(categoryQueryRequest.getName())) {
-            predicates.add(cb.like(categoryRoot.get("name"), "%"+ categoryRoot + "%" ));
-        }
-        if (Objects.nonNull(categoryQueryRequest.getType())) {
-            predicates.add(cb.equal(categoryRoot.get("transaction_type"), categoryQueryRequest.getType()));
-        }
         Order order = cb.asc(categoryRoot.get("name"));
-
-        cq.where(predicates.toArray(new Predicate[0]));
+        cq.where(getPredicates(cb,categoryRoot, categoryQueryRequest.getQueryParams()).toArray(new Predicate[0]));
         cq.orderBy(order);
+
         //count max result
         CriteriaQuery<Long> countQuery = cb.createQuery(Long.class);
-        countQuery.where(predicates.toArray(new Predicate[0]));
-        countQuery.select(cb.count(countQuery.from(Category.class)));
+        Root<Category> categoryCountRoot = countQuery.from(Category.class);
+        //Order countOrder = cb.asc(categoryCountRoot.get("name"));
+        //countQuery.orderBy(countOrder);
+        countQuery.where(getPredicates(cb, categoryCountRoot, categoryQueryRequest.getQueryParams()).toArray(new Predicate[0]));
+        countQuery.select(cb.count(categoryCountRoot));
         Long count = em.createQuery(countQuery).getSingleResult();
 
         TypedQuery<Category> tq = em.createQuery(cq);
         tq.setFirstResult(categoryQueryRequest.getPage().intValue()-1);
         tq.setMaxResults(categoryQueryRequest.getResultsPerPage().intValue());
 
+        System.out.println(count);
         CategoryQueryResponse response = new CategoryQueryResponse().withMaxElements(BigInteger.valueOf(count))
                 .withList(buildList(tq.getResultList()));
 
         return response;
     }
 
+    private List<Predicate> getPredicates(CriteriaBuilder cb, Root<Category> rt, CategoryQueryParams categoryQueryParams) {
+        List<Predicate> predicates = new ArrayList<>();
+
+        if (StringUtils.hasText(categoryQueryParams.getName())) {
+            predicates.add(cb.like(rt.get("name"), "%" + categoryQueryParams.getName() + "%" ));
+        }
+        if (Objects.nonNull(categoryQueryParams.getType())) {
+            predicates.add(cb.equal(rt.get("transaction_type"), categoryQueryParams.getType()));
+        }
+
+        return predicates;
+    }
+
     private CategoryListType buildList(List<Category> resultList) {
         CategoryListType list = new CategoryListType();
         for(var e : resultList) {
-            list.setRows(mapper.map(e, CategoryEntityType.class));
+            list.withRows(mapper.map(e, CategoryEntityType.class));
         }
         return list;
     }
