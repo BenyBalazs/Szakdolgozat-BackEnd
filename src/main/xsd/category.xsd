@@ -61,8 +61,7 @@
     <xsd:complexType name="CategoryQueryResponse">
         <xsd:sequence>
             <xsd:element name="maxElements" type="xsd:integer"/>
-            <xsd:element name="page" type="xsd:integer"/>
-            <xsd:element name="name" type="xsd:string"/>
+            <xsd:element name="list" type="CategoryListType" minOccurs="0" maxOccurs="unbounded"/>
         </xsd:sequence>
     </xsd:complexType>
 

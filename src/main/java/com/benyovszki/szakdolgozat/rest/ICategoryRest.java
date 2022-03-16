@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.*;
 public interface ICategoryRest {
 
     @GetMapping
-    ResponseEntity<CategoryResponse> getById(@RequestParam long id, String owner);
+    ResponseEntity<CategoryResponse> getById(@RequestParam long id);
     @PostMapping
-    ResponseEntity<CategoryResponse> createCategory(@RequestBody CategoryCreateRequest expenseCreateRequest);
+    ResponseEntity<CategoryResponse> createCategory(@RequestBody CategoryCreateRequest categoryCreateRequest);
     @PutMapping
-    ResponseEntity<CategoryResponse> editCategory(@RequestBody CategoryEditRequest expenseCreateRequest);
+    ResponseEntity<CategoryResponse> editCategory(@RequestBody CategoryEditRequest categoryEditRequest);
     @DeleteMapping()
-    ResponseEntity<CategoryResponse> deleteCategory(@RequestParam long id, String owner);
+    ResponseEntity<CategoryResponse> deleteCategory(@RequestParam long id);
     @PostMapping(path = RestPaths.QUERY)
-    ResponseEntity<CategoryResponse> queryCategory(@RequestBody CategoryQueryRequest expenseQueryRequest);
+    ResponseEntity<CategoryQueryResponse> queryCategory(@RequestBody CategoryQueryRequest categoryQueryRequest);
 }

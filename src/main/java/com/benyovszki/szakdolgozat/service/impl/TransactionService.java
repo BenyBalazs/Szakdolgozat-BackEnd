@@ -8,11 +8,14 @@ import com.benyovszki.szakdolgozat.rest.ITransactionService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+
 @Service
 @AllArgsConstructor
 public class TransactionService implements ITransactionService {
 
     private TransactionRepository transactionRepository;
+    private EntityManager em;
 
     @Override
     public Transaction getById(long id) {
@@ -29,4 +32,5 @@ public class TransactionService implements ITransactionService {
     public void deleteTransaction(long id) {
         transactionRepository.deleteById(id);
     }
+
 }
