@@ -4,7 +4,7 @@ import com.benyovszki.szakdolgozat.action.transaction.TransactionCreateAction;
 import com.benyovszki.szakdolgozat.action.transaction.TransactionDeleteAction;
 import com.benyovszki.szakdolgozat.action.transaction.TransactionEditAction;
 import com.benyovszki.szakdolgozat.action.transaction.TransactionGetAction;
-import com.benyovszki.szakdolgozat.dto.*;
+import dto.szakdolgozat.benyovszki.com.transaction.*;
 import com.benyovszki.szakdolgozat.dto.response.transaction.TransactionQueryResponse;
 import com.benyovszki.szakdolgozat.model.Transaction;
 import com.benyovszki.szakdolgozat.rest.ITransactionRest;

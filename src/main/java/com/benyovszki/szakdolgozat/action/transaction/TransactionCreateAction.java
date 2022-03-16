@@ -1,8 +1,6 @@
 package com.benyovszki.szakdolgozat.action.transaction;
 
-import com.benyovszki.szakdolgozat.dto.TransactionCreateRequest;
-import com.benyovszki.szakdolgozat.dto.TransactionEntityType;
-import com.benyovszki.szakdolgozat.dto.TransactionResponse;
+import dto.szakdolgozat.benyovszki.com.transaction.*;
 import com.benyovszki.szakdolgozat.model.Transaction;
 import com.benyovszki.szakdolgozat.repository.UserRepository;
 import com.benyovszki.szakdolgozat.service.impl.TransactionService;
@@ -30,7 +28,6 @@ public class TransactionCreateAction {
         transaction.setOwner(userService.getByUsername(createRequest.getOwner()));
         transaction.setDateOfAdd(DateTime.now().toDate());
         transaction = transactionService.saveTransaction(transaction);
-
         TransactionEntityType entityType = mapper.map(transaction, TransactionEntityType.class);
         TransactionResponse response = new TransactionResponse();
         response.setTransactionDetails(entityType);

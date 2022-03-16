@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" jaxb:version="2.0"
+            targetNamespace="http://com.benyovszki.szakdolgozat.dto/category"
+            xmlns="http://com.benyovszki.szakdolgozat.dto/category"
+            xmlns:transaction="http://com.benyovszki.szakdolgozat.dto/transaction">
+
+    <xsd:import namespace="http://com.benyovszki.szakdolgozat.dto/transaction" schemaLocation="transaction.xsd"/>
+
+    <xsd:complexType name="CategoryData">
+        <xsd:sequence>
+            <xsd:element name="name" type="xsd:string"/>
+            <xsd:element name="type" type="transaction:TransactionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="CategoryEntityType">
+        <xsd:complexContent>
+            <xsd:extension base="CategoryData">
+                <xsd:sequence>
+                    <xsd:element name="id" type="xsd:long"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="CategoryListType">
+        <xsd:sequence>
+            <xsd:element name="rows" type="CategoryEntityType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="CategoryResponse">
+        <xsd:sequence>
+            <xsd:element name="categoryDetails" type="CategoryEntityType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="CategoryCreateRequest">
+        <xsd:sequence>
+            <xsd:element name="categoryData" type="CategoryData"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="CategoryEditRequest">
+        <xsd:sequence>
+            <xsd:element name="categoryEntityData" type="CategoryEntityType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="CategoryQueryRequest">
+        <xsd:sequence>
+            <xsd:element name="page" type="xsd:integer"/>
+            <xsd:element name="row" type="xsd:integer"/>
+            <xsd:element name="resultsPerPage" type="xsd:integer"/>
+            <xsd:element name="name" type="xsd:string"/>
+            <xsd:element name="type" type="transaction:TransactionType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="CategoryQueryResponse">
+        <xsd:sequence>
+            <xsd:element name="maxElements" type="xsd:integer"/>
+            <xsd:element name="page" type="xsd:integer"/>
+            <xsd:element name="name" type="xsd:string"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+</xsd:schema>

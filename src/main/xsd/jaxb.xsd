@@ -10,8 +10,4 @@
             </jaxb:schemaBindings>
         </xsd:appinfo>
     </xsd:annotation>
-
-    <xsd:complexType name="CreateProductRequest">
-    </xsd:complexType>
-
 </xsd:schema>

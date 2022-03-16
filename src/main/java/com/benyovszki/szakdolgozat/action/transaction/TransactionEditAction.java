@@ -1,8 +1,6 @@
 package com.benyovszki.szakdolgozat.action.transaction;
 
-import com.benyovszki.szakdolgozat.dto.TransactionEditRequest;
-import com.benyovszki.szakdolgozat.dto.TransactionEntityType;
-import com.benyovszki.szakdolgozat.dto.TransactionResponse;
+import dto.szakdolgozat.benyovszki.com.transaction.*;
 import com.benyovszki.szakdolgozat.exception.ErrorType;
 import com.benyovszki.szakdolgozat.exception.OperationException;
 import com.benyovszki.szakdolgozat.model.Transaction;
@@ -38,20 +36,14 @@ public class TransactionEditAction {
             throw new OperationException(ErrorType.YOU_DONT_OWN_THIS_ENTITY, "This entity was created by another user.");
         }
 
-        transaction.setAmount(entityType.getAmount());
+        transaction = mapper.map(entityType, Transaction.class);
 
         if (entityType.getCategory() != 0) {
             //TODO:KATEGÓRIA BEÁLLÍTÁSA.
         }
-
-        transaction.setDateOfPayment(DateTimeUtil.dtoTimeToDate(entityType.getDateOfPayment()));
-        transaction.setName(entityType.getName());
-        transaction.setType(EnumConverter.convert(entityType.getType(), TransactionType.class));
         transactionService.saveTransaction(transaction);
-        TransactionResponse response = new TransactionResponse();
-        entityType = mapper.map(transaction, TransactionEntityType.class);
-        response.setTransactionDetails(entityType);
-        return response;
+
+        return new TransactionResponse().withTransactionDetails(mapper.map(transaction, TransactionEntityType.class));
     }
 
 }

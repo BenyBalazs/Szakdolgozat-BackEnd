@@ -1,7 +1,6 @@
 package com.benyovszki.szakdolgozat.action.transaction;
 
-import com.benyovszki.szakdolgozat.dto.TransactionEntityType;
-import com.benyovszki.szakdolgozat.dto.TransactionResponse;
+import dto.szakdolgozat.benyovszki.com.transaction.*;
 import com.benyovszki.szakdolgozat.model.Transaction;
 import com.benyovszki.szakdolgozat.service.impl.TransactionService;
 import lombok.AllArgsConstructor;

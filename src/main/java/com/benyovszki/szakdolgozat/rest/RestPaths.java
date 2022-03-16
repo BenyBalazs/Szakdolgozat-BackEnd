@@ -15,5 +15,8 @@ public final class RestPaths {
 
     public static final String BASIC_USER_PATH = BASE_PATH + "/user";
 
-    public static final String BASIC_EXPENSE_PATH = BASE_PATH + "/transaction";
+    public static final String TRANSACTION_PATH = BASE_PATH + "/transaction";
+
+    public static final String CATEGORY_PATH = BASE_PATH +"/category";
+
 }

@@ -4,7 +4,7 @@ import com.benyovszki.szakdolgozat.exception.ErrorType;
 import com.benyovszki.szakdolgozat.exception.OperationException;
 import com.benyovszki.szakdolgozat.model.Transaction;
 import com.benyovszki.szakdolgozat.repository.TransactionRepository;
-import com.benyovszki.szakdolgozat.service.ITransactionService;
+import com.benyovszki.szakdolgozat.rest.ITransactionService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -2,10 +2,7 @@ package com.benyovszki.szakdolgozat.model;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @NoArgsConstructor
@@ -19,4 +16,6 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
+    @Enumerated(value = EnumType.STRING)
+    private TransactionType transactionType;
 }
