@@ -58,7 +58,6 @@
         <xsd:sequence>
             <xsd:element name="page" type="xsd:integer"/>
             <xsd:element name="row" type="xsd:integer"/>
-            <xsd:element name="resultsPerPage" type="xsd:integer"/>
             <xsd:element name="queryParams" type="CategoryQueryParams"/>
         </xsd:sequence>
     </xsd:complexType>

@@ -1,5 +1,6 @@
 package com.benyovszki.szakdolgozat.service.impl;
 
+import com.benyovszki.szakdolgozat.dto.response.QueryResponse;
 import com.benyovszki.szakdolgozat.exception.ErrorType;
 import com.benyovszki.szakdolgozat.exception.OperationException;
 import com.benyovszki.szakdolgozat.model.Category;
@@ -41,33 +42,27 @@ public class CategoryService {
         categoryRepository.deleteById(id);
     }
 
-    public CategoryQueryResponse findByQueryParams(CategoryQueryRequest categoryQueryRequest) {
+    public QueryResponse<Category> findByQueryParams(int page, int rows, CategoryQueryParams categoryQueryParams) {
 
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Category> cq = cb.createQuery(Category.class);
         Root<Category> categoryRoot = cq.from(Category.class);
         Order order = cb.asc(categoryRoot.get("name"));
-        cq.where(getPredicates(cb,categoryRoot, categoryQueryRequest.getQueryParams()).toArray(new Predicate[0]));
+        cq.where(getPredicates(cb,categoryRoot, categoryQueryParams).toArray(new Predicate[0]));
         cq.orderBy(order);
 
         //count max result
         CriteriaQuery<Long> countQuery = cb.createQuery(Long.class);
         Root<Category> categoryCountRoot = countQuery.from(Category.class);
-        //Order countOrder = cb.asc(categoryCountRoot.get("name"));
-        //countQuery.orderBy(countOrder);
-        countQuery.where(getPredicates(cb, categoryCountRoot, categoryQueryRequest.getQueryParams()).toArray(new Predicate[0]));
+        countQuery.where(getPredicates(cb, categoryCountRoot, categoryQueryParams).toArray(new Predicate[0]));
         countQuery.select(cb.count(categoryCountRoot));
         Long count = em.createQuery(countQuery).getSingleResult();
 
         TypedQuery<Category> tq = em.createQuery(cq);
-        tq.setFirstResult(categoryQueryRequest.getPage().intValue()-1);
-        tq.setMaxResults(categoryQueryRequest.getResultsPerPage().intValue());
+        tq.setFirstResult((int) (rows * (page - 1)));
+        tq.setMaxResults(rows);
 
-        System.out.println(count);
-        CategoryQueryResponse response = new CategoryQueryResponse().withMaxElements(BigInteger.valueOf(count))
-                .withList(buildList(tq.getResultList()));
-
-        return response;
+        return QueryResponse.<Category>builder().responseData(tq.getResultList()).maxResults(count).build();
     }
 
     private List<Predicate> getPredicates(CriteriaBuilder cb, Root<Category> rt, CategoryQueryParams categoryQueryParams) {
@@ -81,13 +76,5 @@ public class CategoryService {
         }
 
         return predicates;
-    }
-
-    private CategoryListType buildList(List<Category> resultList) {
-        CategoryListType list = new CategoryListType();
-        for(var e : resultList) {
-            list.withRows(mapper.map(e, CategoryEntityType.class));
-        }
-        return list;
     }
 }
