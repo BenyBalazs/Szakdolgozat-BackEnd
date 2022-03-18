@@ -1,19 +1,12 @@
 package com.benyovszki.szakdolgozat.rest.impl;
 
-import com.benyovszki.szakdolgozat.action.transaction.TransactionCreateAction;
-import com.benyovszki.szakdolgozat.action.transaction.TransactionDeleteAction;
-import com.benyovszki.szakdolgozat.action.transaction.TransactionEditAction;
-import com.benyovszki.szakdolgozat.action.transaction.TransactionGetAction;
+import com.benyovszki.szakdolgozat.action.transaction.*;
 import dto.szakdolgozat.benyovszki.com.transaction.*;
-import com.benyovszki.szakdolgozat.dto.response.transaction.TransactionQueryResponse;
-import com.benyovszki.szakdolgozat.model.Transaction;
 import com.benyovszki.szakdolgozat.rest.ITransactionRest;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.net.http.HttpResponse;
 
 @RestController
 @AllArgsConstructor
@@ -23,6 +16,7 @@ public class TransactionRest implements ITransactionRest {
     private TransactionCreateAction createAction;
     private TransactionEditAction editAction;
     private TransactionDeleteAction deleteAction;
+    private TransactionQueryAction queryAction;
 
     @Override
     public ResponseEntity<TransactionResponse> getById(long id, String owner) {
@@ -30,13 +24,13 @@ public class TransactionRest implements ITransactionRest {
     }
 
     @Override
-    public ResponseEntity<TransactionResponse> createTransaction(TransactionCreateRequest expenseCreateRequest) {
-        return ResponseEntity.status(HttpStatus.OK).body(createAction.createTransaction(expenseCreateRequest));
+    public ResponseEntity<TransactionResponse> createTransaction(TransactionCreateRequest transactionCreateRequest) {
+        return ResponseEntity.status(HttpStatus.OK).body(createAction.createTransaction(transactionCreateRequest));
     }
 
     @Override
-    public ResponseEntity<TransactionResponse> editTransaction(TransactionEditRequest expenseCreateRequest) {
-        return ResponseEntity.status(HttpStatus.OK).body(editAction.editTransaction(expenseCreateRequest));
+    public ResponseEntity<TransactionResponse> editTransaction(TransactionEditRequest transactionEditRequest) {
+        return ResponseEntity.status(HttpStatus.OK).body(editAction.editTransaction(transactionEditRequest));
     }
 
     @Override
@@ -46,7 +40,7 @@ public class TransactionRest implements ITransactionRest {
     }
 
     @Override
-    public ResponseEntity<TransactionListResponse> queryTransaction(TransactionListRequest expenseQueryRequest) {
-        return null;
+    public ResponseEntity<TransactionQueryResponse> queryTransaction(TransactionQueryRequest transactionQueryRequest) {
+        return ResponseEntity.status(HttpStatus.OK).body(queryAction.queryTransaction(transactionQueryRequest));
     }
 }

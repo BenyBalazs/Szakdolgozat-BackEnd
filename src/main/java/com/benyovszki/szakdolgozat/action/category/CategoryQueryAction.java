@@ -43,7 +43,7 @@ public class CategoryQueryAction {
         var response = new CategoryQueryResponse();
         for (var e : responseData ) {
             CategoryListType listType =
-                    new CategoryListType().withRows(mapper.map(e, CategoryEntityType.class));
+                    new CategoryListType().withCategoryEntity(mapper.map(e, CategoryEntityType.class));
             response.withList(listType);
         }
         return response;

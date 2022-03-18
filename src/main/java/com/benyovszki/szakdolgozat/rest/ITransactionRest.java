@@ -12,11 +12,11 @@ public interface ITransactionRest {
      @GetMapping
      ResponseEntity<TransactionResponse> getById(@RequestParam long id, String owner);
      @PostMapping
-     ResponseEntity<TransactionResponse> createTransaction(@RequestBody TransactionCreateRequest expenseCreateRequest);
+     ResponseEntity<TransactionResponse> createTransaction(@RequestBody TransactionCreateRequest transactionCreateRequest);
      @PutMapping
-     ResponseEntity<TransactionResponse> editTransaction(@RequestBody TransactionEditRequest expenseCreateRequest);
+     ResponseEntity<TransactionResponse> editTransaction(@RequestBody TransactionEditRequest transactionEditRequest);
      @DeleteMapping()
      ResponseEntity<TransactionResponse> deleteTransaction(@RequestParam long id, String owner);
      @PostMapping(path = RestPaths.QUERY)
-     ResponseEntity<TransactionListResponse> queryTransaction(@RequestBody TransactionListRequest expenseQueryRequest);
+     ResponseEntity<TransactionQueryResponse> queryTransaction(@RequestBody TransactionQueryRequest transactionQueryRequest);
 }

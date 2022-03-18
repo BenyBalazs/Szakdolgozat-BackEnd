@@ -8,14 +8,12 @@ import com.benyovszki.szakdolgozat.repository.CategoryRepository;
 import dto.szakdolgozat.benyovszki.com.category.*;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.data.jpa.repository.query.QueryUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -26,7 +24,6 @@ public class CategoryService {
 
     private CategoryRepository categoryRepository;
     private EntityManager em;
-    private ModelMapper mapper;
 
     public Category findById(long id) {
        return categoryRepository.findById(id)
