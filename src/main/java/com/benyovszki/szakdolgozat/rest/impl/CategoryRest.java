@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 public class CategoryRest implements ICategoryRest {
 
-    CategoryGetAction getAction;
-    CategoryCreateAction createAction;
-    CategoryEditAction editAction;
-    CategoryDeleteAction deleteAction;
-    CategoryQueryAction queryAction;
+    private CategoryGetAction getAction;
+    private CategoryCreateAction createAction;
+    private CategoryEditAction editAction;
+    private CategoryDeleteAction deleteAction;
+    private CategoryQueryAction queryAction;
 
     @Override
     public ResponseEntity<CategoryResponse> getById(long id) {

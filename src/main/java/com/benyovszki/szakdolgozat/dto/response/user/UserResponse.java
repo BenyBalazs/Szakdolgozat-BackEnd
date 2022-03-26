@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UserResponse {
 
-    String username;
-    String email;
-    Role role;
+    private String username;
+    private String email;
+    private Role role;
 }

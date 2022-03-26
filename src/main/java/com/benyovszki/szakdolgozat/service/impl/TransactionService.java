@@ -5,7 +5,8 @@ import com.benyovszki.szakdolgozat.exception.ErrorType;
 import com.benyovszki.szakdolgozat.exception.OperationException;
 import com.benyovszki.szakdolgozat.model.Transaction;
 import com.benyovszki.szakdolgozat.repository.TransactionRepository;
-import com.benyovszki.szakdolgozat.rest.ITransactionService;
+import com.benyovszki.szakdolgozat.service.ITransactionService;
+import com.benyovszki.szakdolgozat.util.DateTimeUtil;
 import dto.szakdolgozat.benyovszki.com.transaction.TransactionQueryParams;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,9 +15,7 @@ import org.springframework.util.StringUtils;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
@@ -67,17 +66,23 @@ public class TransactionService implements ITransactionService {
     private List<Predicate> getPredicates(CriteriaBuilder cb, Root<Transaction> rt, TransactionQueryParams queryParams) {
         List<Predicate> predicates = new ArrayList<>();
 
+        if (Objects.isNull(queryParams)) {
+            return new ArrayList<>();
+        }
+
         if (StringUtils.hasText(queryParams.getName())) {
             predicates.add(cb.like(rt.get("name"), "%" + queryParams.getName() + "%" ));
         }
         if (Objects.nonNull(queryParams.getType())) {
-            predicates.add(cb.equal(rt.get("transaction_type"), queryParams.getType()));
+            predicates.add(cb.equal(rt.get("transactionType"), queryParams.getType()));
         }
         if (queryParams.getCategoryId() != 0) {
-            predicates.add(cb.equal(rt.get("category_id"), queryParams.getCategoryId()));
+            predicates.add(cb.equal(rt.get("category"), queryParams.getCategoryId()));
         }
         if (Objects.nonNull(queryParams.getDateOfPayment())) {
-
+            Date late = DateTimeUtil.toEndOfDate(queryParams.getDateOfPayment());
+            Date early = DateTimeUtil.toStartOfDate(queryParams.getDateOfPayment());
+            predicates.add(cb.between(rt.get("dateOfPayment"),early, late));
         }
 
         return predicates;

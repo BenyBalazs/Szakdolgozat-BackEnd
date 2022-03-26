@@ -24,6 +24,10 @@ public class SzakdolgozatApplication {
 			mapping.map(source -> source.getOwner().getUsername(), TransactionEntityType::setOwner);
 		});
 
+		mapper.typeMap(Transaction.class, TransactionEntityType.class).addMappings(mapping -> {
+			mapping.map(source -> source.getCategory().getId(), TransactionEntityType::setCategory);
+		});
+
 		mapper.addMappings(new PropertyMap<TransactionEntityType, Transaction>() {
 			@Override
 			protected void configure() {

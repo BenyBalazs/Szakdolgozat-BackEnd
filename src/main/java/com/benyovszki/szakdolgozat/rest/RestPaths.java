@@ -11,7 +11,7 @@ public final class RestPaths {
 
     public static final String QUERY = "/query";
 
-    public static final String USER_MODIFICATION_PATH = BASE_PATH + "/mod_user";
+    public static final String USER_ADMINISTRATION_PATH = BASE_PATH + "/administration";
 
     public static final String BASIC_USER_PATH = BASE_PATH + "/user";
 

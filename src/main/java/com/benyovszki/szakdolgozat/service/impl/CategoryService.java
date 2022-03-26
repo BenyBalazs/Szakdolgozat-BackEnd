@@ -4,7 +4,9 @@ import com.benyovszki.szakdolgozat.dto.response.QueryResponse;
 import com.benyovszki.szakdolgozat.exception.ErrorType;
 import com.benyovszki.szakdolgozat.exception.OperationException;
 import com.benyovszki.szakdolgozat.model.Category;
+import com.benyovszki.szakdolgozat.model.TransactionType;
 import com.benyovszki.szakdolgozat.repository.CategoryRepository;
+import com.benyovszki.szakdolgozat.util.EnumConverter;
 import dto.szakdolgozat.benyovszki.com.category.*;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -65,11 +67,15 @@ public class CategoryService {
     private List<Predicate> getPredicates(CriteriaBuilder cb, Root<Category> rt, CategoryQueryParams categoryQueryParams) {
         List<Predicate> predicates = new ArrayList<>();
 
+        if (Objects.isNull(categoryQueryParams)) {
+            return new ArrayList<>();
+        }
+
         if (StringUtils.hasText(categoryQueryParams.getName())) {
             predicates.add(cb.like(rt.get("name"), "%" + categoryQueryParams.getName() + "%" ));
         }
-        if (Objects.nonNull(categoryQueryParams.getType())) {
-            predicates.add(cb.equal(rt.get("transaction_type"), categoryQueryParams.getType()));
+        if (Objects.nonNull(categoryQueryParams.getTransactionType())) {
+            predicates.add(cb.equal(rt.get("transactionType"), EnumConverter.convert(categoryQueryParams.getTransactionType(), TransactionType.class)));
         }
 
         return predicates;

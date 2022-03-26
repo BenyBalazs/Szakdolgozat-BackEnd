@@ -8,7 +8,17 @@ import java.util.Date;
 public class DateTimeUtil {
 
     public static Date dtoTimeToDate(XMLGregorianCalendar xmlGregorianCalendar) {
-        DateTime dateTime = new DateTime(xmlGregorianCalendar.toGregorianCalendar());
-        return dateTime.toDate();
+        return toDateTime(xmlGregorianCalendar).toDate();
+    }
+
+    public static Date toStartOfDate(XMLGregorianCalendar xmlGregorianCalendar) {
+        return toDateTime(xmlGregorianCalendar).withTimeAtStartOfDay().toDate();
+    }
+    public static Date toEndOfDate(XMLGregorianCalendar xmlGregorianCalendar) {
+        return toDateTime(xmlGregorianCalendar).withTime(23, 59, 59, 999).toDate();
+    }
+
+    private static DateTime toDateTime(XMLGregorianCalendar xmlGregorianCalendar) {
+        return new DateTime(xmlGregorianCalendar.toGregorianCalendar());
     }
 }

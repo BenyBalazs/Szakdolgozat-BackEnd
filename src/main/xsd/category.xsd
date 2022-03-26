@@ -50,7 +50,7 @@
     <xsd:complexType name="CategoryQueryParams">
         <xsd:sequence>
             <xsd:element name="name" type="xsd:string"/>
-            <xsd:element name="type" type="transaction:TransactionType"/>
+            <xsd:element name="transactionType" type="transaction:TransactionType"/>
         </xsd:sequence>
     </xsd:complexType>
 

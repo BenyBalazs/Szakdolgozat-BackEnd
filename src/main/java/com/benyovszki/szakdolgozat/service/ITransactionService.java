@@ -1,4 +1,4 @@
-package com.benyovszki.szakdolgozat.rest;
+package com.benyovszki.szakdolgozat.service;
 
 import com.benyovszki.szakdolgozat.model.Transaction;
 

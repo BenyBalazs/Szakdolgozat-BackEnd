@@ -1,5 +1,7 @@
 package com.benyovszki.szakdolgozat.action.transaction;
 
+import com.benyovszki.szakdolgozat.model.Category;
+import com.benyovszki.szakdolgozat.repository.CategoryRepository;
 import dto.szakdolgozat.benyovszki.com.transaction.*;
 import com.benyovszki.szakdolgozat.model.Transaction;
 import com.benyovszki.szakdolgozat.repository.UserRepository;
@@ -19,6 +21,7 @@ import javax.print.attribute.standard.Destination;
 public class TransactionCreateAction {
 
     private TransactionService transactionService;
+    private CategoryRepository categoryRepository;
     private UserService userService;
     private ModelMapper mapper;
 
@@ -27,6 +30,11 @@ public class TransactionCreateAction {
         Transaction transaction = mapper.map(createRequest.getTransactionData(), Transaction.class);
         transaction.setOwner(userService.getByUsername(createRequest.getOwner()));
         transaction.setDateOfAdd(DateTime.now().toDate());
+        long categoryId = createRequest.getTransactionData().getCategory();
+        if (categoryId != 0) {
+            Category category = categoryRepository.getById(categoryId);
+            transaction.setCategory(category);
+        }
         transaction = transactionService.saveTransaction(transaction);
         TransactionEntityType entityType = mapper.map(transaction, TransactionEntityType.class);
         TransactionResponse response = new TransactionResponse();
