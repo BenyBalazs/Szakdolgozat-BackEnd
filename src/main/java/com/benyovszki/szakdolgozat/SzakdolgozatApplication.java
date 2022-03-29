@@ -4,6 +4,7 @@ import javax.annotation.PostConstruct;
 
 import com.benyovszki.szakdolgozat.model.Category;
 import com.benyovszki.szakdolgozat.model.TransactionType;
+import com.benyovszki.szakdolgozat.model.user.Role;
 import com.benyovszki.szakdolgozat.model.user.User;
 import com.benyovszki.szakdolgozat.repository.CategoryRepository;
 import com.benyovszki.szakdolgozat.repository.UserRepository;
@@ -68,6 +69,7 @@ public class SzakdolgozatApplication {
                     .username("admin")
                     .email("admin@admin.hu")
                     .password(passwordEncoder.encode("admin"))
+                    .role(Role.ROLE_ADMIN)
                     .build();
             userRepository.save(admin);
             categoryRepository.save(Category.builder().name("Fizetés").transactionType(TransactionType.INCOME).build());
