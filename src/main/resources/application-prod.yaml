@@ -9,7 +9,7 @@ logging:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://us-cdbr-east-05.cleardb.net/heroku_c3ebf15d54dcb9a
+    url: jdbc:mysql://eu-cdbr-west-02.cleardb.net/heroku_b03068003284c7c
     username: bb5e8f75c48a9a
     password: 86290354
   main:

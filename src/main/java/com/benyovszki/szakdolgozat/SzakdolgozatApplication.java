@@ -83,7 +83,7 @@ public class SzakdolgozatApplication {
 			categoryRepository.save(Category.builder().name("Öltözködés").transactionType(TransactionType.EXPENSE).build());
 			categoryRepository.save(Category.builder().name("Szórakozás").transactionType(TransactionType.EXPENSE).build());
 		}catch (Exception e) {
-
+			System.out.println("össze szartam magam bocsi");
 		}
 	}
 
