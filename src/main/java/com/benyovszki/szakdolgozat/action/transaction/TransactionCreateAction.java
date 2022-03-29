@@ -30,7 +30,7 @@ public class TransactionCreateAction {
         Transaction transaction = mapper.map(createRequest.getTransactionData(), Transaction.class);
         transaction.setOwner(userService.getByUsername(createRequest.getOwner()));
         transaction.setDateOfAdd(DateTime.now().toDate());
-        long categoryId = createRequest.getTransactionData().getCategory();
+        long categoryId = createRequest.getTransactionData().getCategoryId();
         if (categoryId != 0) {
             Category category = categoryRepository.getById(categoryId);
             transaction.setCategory(category);

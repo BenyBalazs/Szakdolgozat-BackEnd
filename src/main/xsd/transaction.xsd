@@ -17,7 +17,7 @@
             <xsd:element name="amount" type="xsd:decimal"/>
             <xsd:element name="dateOfPayment" type="xsd:dateTime"/>
             <xsd:element name="type" type="TransactionType"/>
-            <xsd:element name="category" type="xsd:long"/>
+            <xsd:element name="categoryId" type="xsd:long"/>
         </xsd:sequence>
     </xsd:complexType>
 
@@ -27,6 +27,7 @@
                 <xsd:sequence>
                     <xsd:element name="id" type="xsd:long"/>
                     <xsd:element name="owner" type="xsd:string"/>
+                    <xsd:element name="categoryName" type="xsd:string"/>
                     <xsd:element name="dateOfAdd" type="xsd:dateTime"/>
                 </xsd:sequence>
             </xsd:extension>
@@ -35,7 +36,7 @@
 
     <xsd:complexType name="TransactionListType">
         <xsd:sequence>
-            <xsd:element name="transactionDetail" type="TransactionEntityType" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="transactionEntity" type="TransactionEntityType"/>
         </xsd:sequence>
     </xsd:complexType>
 
@@ -61,8 +62,10 @@
 
     <xsd:complexType name="TransactionQueryParams">
         <xsd:sequence>
+            <xsd:element name="owner" type="xsd:string"/>
             <xsd:element name="name" type="xsd:string"/>
-            <xsd:element name="dateOfPayment" type="xsd:dateTime"/>
+            <xsd:element name="dateOfPaymentFrom" type="xsd:dateTime"/>
+            <xsd:element name="dateOfPaymentTo" type="xsd:dateTime"/>
             <xsd:element name="type" type="TransactionType"/>
             <xsd:element name="categoryId" type="xsd:long"/>
         </xsd:sequence>

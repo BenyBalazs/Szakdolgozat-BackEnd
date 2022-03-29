@@ -19,4 +19,6 @@ public final class RestPaths {
 
     public static final String CATEGORY_PATH = BASE_PATH +"/category";
 
+    public static final String BALANCE_PATH = BASE_PATH + "/balance";
+
 }

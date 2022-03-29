@@ -1,5 +1,7 @@
 package com.benyovszki.szakdolgozat.action.transaction;
 
+import com.benyovszki.szakdolgozat.model.Category;
+import com.benyovszki.szakdolgozat.service.impl.CategoryService;
 import dto.szakdolgozat.benyovszki.com.transaction.*;
 import com.benyovszki.szakdolgozat.exception.ErrorType;
 import com.benyovszki.szakdolgozat.exception.OperationException;
@@ -24,6 +26,7 @@ import java.util.Objects;
 public class TransactionEditAction {
 
     private TransactionService transactionService;
+    private CategoryService categoryService;
     private ModelMapper mapper;
 
     @Transactional
@@ -38,8 +41,9 @@ public class TransactionEditAction {
 
         mapper.map(entityType, transaction);
 
-        if (entityType.getCategory() != 0) {
-            //TODO:KATEGÓRIA BEÁLLÍTÁSA.
+        if (entityType.getCategoryId() != 0) {
+            Category category = categoryService.findById(entityType.getCategoryId());
+            transaction.setCategory(category);
         }
         transactionService.saveTransaction(transaction);
 

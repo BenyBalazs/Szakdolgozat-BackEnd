@@ -10,8 +10,10 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url:
-    username:
-    password:
+    username: bd3045c3aeaab2
+    password: fa6fe9b8
+  main:
+    allow-circular-references: false
 
   jpa:
     hibernate.ddl-auto: update

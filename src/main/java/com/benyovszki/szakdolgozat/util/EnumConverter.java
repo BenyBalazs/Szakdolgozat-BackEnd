@@ -10,15 +10,4 @@ public class EnumConverter {
         }
         return EnumUtils.getEnum(targetClass, source.name());
     }
-
-    public static <E extends Enum<E>> E getEnum(final Class<E> enumClass, final String enumName) {
-        if (enumName == null) {
-            return null;
-        }
-        try {
-            return Enum.valueOf(enumClass, enumName);
-        } catch (final IllegalArgumentException ex) {
-            return null;
-        }
-    }
 }
