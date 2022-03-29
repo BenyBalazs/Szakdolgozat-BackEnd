@@ -167,10 +167,10 @@
 		<profile>
 			<id>dev</id>
 			<activation>
-				<activeByDefault>true</activeByDefault>
+				<activeByDefault>false</activeByDefault>
 			</activation>
 			<properties>
-				<activeProfile>production</activeProfile>
+				<activeProfile>development</activeProfile>
 			</properties>
 		</profile>
 	</profiles>
