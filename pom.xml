@@ -118,7 +118,6 @@
 				<configuration>
 					<arguments>
 						<argument>-Xfluent-api</argument>
-						<argument>-Xannotate</argument>
 					</arguments>
 				</configuration>
 				<dependencies>
@@ -126,11 +125,6 @@
 						<groupId>org.jvnet.jaxb2_commons</groupId>
 						<artifactId>jaxb2-fluent-api</artifactId>
 						<version>3.0</version>
-					</dependency>
-					<dependency>
-						<groupId>org.jvnet.jaxb2_commons</groupId>
-						<artifactId>jaxb2-basics-annotate</artifactId>
-						<version>1.0.4</version>
 					</dependency>
 				</dependencies>
 			</plugin>

@@ -86,9 +86,10 @@ public class TransactionService implements ITransactionService {
         }
         if (Objects.nonNull(queryParams.getDateOfPaymentFrom()) && Objects.nonNull(queryParams.getDateOfPaymentTo())) {
             Date from = DateTimeUtil.dtoTimeToDate(queryParams.getDateOfPaymentFrom());
-            Date to = DateTimeUtil.toStartOfDate(queryParams.getDateOfPaymentTo());
+            Date to = DateTimeUtil.dtoTimeToDate(queryParams.getDateOfPaymentTo());
             Predicate greaterThanOrEqualTo = cb.greaterThanOrEqualTo(rt.get("dateOfPayment"),from);
             Predicate lessThanOrEqualTo = cb.lessThanOrEqualTo(rt.get("dateOfPayment"), to);
+            System.out.println(greaterThanOrEqualTo.toString() + " " + lessThanOrEqualTo.toString());
             predicates.add(cb.and(greaterThanOrEqualTo, lessThanOrEqualTo));
         }
 

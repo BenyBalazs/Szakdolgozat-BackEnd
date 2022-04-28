@@ -1,6 +1,5 @@
 package com.benyovszki.szakdolgozat.rest;
 
-import com.benyovszki.szakdolgozat.rest.RestPaths;
 import dto.szakdolgozat.benyovszki.com.category.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

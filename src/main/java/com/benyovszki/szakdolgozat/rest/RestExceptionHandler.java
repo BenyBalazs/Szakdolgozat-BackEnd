@@ -18,7 +18,6 @@ import java.nio.file.AccessDeniedException;
 @RestControllerAdvice
 public class RestExceptionHandler {
 
-
     @ExceptionHandler(InvalidCredentialsException.class)
     public ResponseEntity<ErrorResponse> handleRuntimeException(InvalidCredentialsException operationException, HandlerMethod handlerMethod, HttpServletRequest request) {
         HttpStatus status = HttpStatus.UNAUTHORIZED;
