@@ -45,6 +45,7 @@ public class TransactionEditAction {
             Category category = categoryService.findById(entityType.getCategoryId());
             transaction.setCategory(category);
         }
+        transaction.setDateOfPayment(DateTimeUtil.dtoTimeToDate(editRequest.getTransactionEntityData().getDateOfPayment()));
         transactionService.saveTransaction(transaction);
 
         return new TransactionResponse().withTransactionDetails(mapper.map(transaction, TransactionEntityType.class));

@@ -47,10 +47,15 @@ public class SzakdolgozatApplication {
             }
         });
 
+        mapper.typeMap(Category.class, CategoryEntityType.class).addMappings(mapping -> {
+            mapping.map(source -> source.getOwner().getUsername(), CategoryEntityType::setOwner);
+        });
+
         mapper.addMappings(new PropertyMap<CategoryEntityType, Category>() {
             @Override
             protected void configure() {
                 skip(destination.getId());
+                skip(destination.getOwner());
             }
         });
 

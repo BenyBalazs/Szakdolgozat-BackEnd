@@ -2,6 +2,7 @@ package com.benyovszki.szakdolgozat.action.transaction;
 
 import com.benyovszki.szakdolgozat.model.Category;
 import com.benyovszki.szakdolgozat.repository.CategoryRepository;
+import com.benyovszki.szakdolgozat.util.DateTimeUtil;
 import dto.szakdolgozat.benyovszki.com.transaction.*;
 import com.benyovszki.szakdolgozat.model.Transaction;
 import com.benyovszki.szakdolgozat.repository.UserRepository;
@@ -35,6 +36,8 @@ public class TransactionCreateAction {
             Category category = categoryRepository.getById(categoryId);
             transaction.setCategory(category);
         }
+        transaction.setDateOfPayment(DateTimeUtil.dtoTimeToDate(createRequest.getTransactionData().getDateOfPayment()));
+
         transaction = transactionService.saveTransaction(transaction);
         TransactionEntityType entityType = mapper.map(transaction, TransactionEntityType.class);
         TransactionResponse response = new TransactionResponse();

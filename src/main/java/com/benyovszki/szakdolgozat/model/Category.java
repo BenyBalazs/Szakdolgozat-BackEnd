@@ -1,5 +1,6 @@
 package com.benyovszki.szakdolgozat.model;
 
+import com.benyovszki.szakdolgozat.model.user.User;
 import lombok.*;
 
 import javax.persistence.*;
@@ -18,4 +19,6 @@ public class Category {
     private String name;
     @Enumerated(value = EnumType.STRING)
     private TransactionType transactionType;
+    @ManyToOne(fetch = FetchType.EAGER)
+    private User owner;
 }
